@@ -1,18 +1,18 @@
-
 import './App.css';
-// import styled from 'styled-components'
-import { Footer, Header, LandingPage } from './components';
-
+import { Footer, Header, LandingPage, MyNotes } from './components';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
+    <BrowserRouter>
       <Header/>
-      <LandingPage/>
+      <Routes>
+        <Route path='/' element={<LandingPage/>} exact/>
+        <Route path='/mynotes' element={<MyNotes/>}/>
+      </Routes>
       <Footer/>
-    </div>
+    </BrowserRouter>
   );
 }
 
 export default App;
-

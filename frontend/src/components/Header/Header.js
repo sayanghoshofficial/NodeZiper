@@ -1,11 +1,16 @@
 import React from 'react'
 import { Container, Form, Nav, NavDropdown, Navbar } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
     return (
         <Navbar expand="lg" bg='primary' className="bg-body-tertiary">
             <Container>
-                <Navbar.Brand href="/">NoteZipper</Navbar.Brand>
+                <Navbar.Brand href='/'>
+                    <Link to={"/"} style={{ textDecoration: "none" }}>
+                        NoteZipper
+                    </Link>
+                </Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav className='m-auto'>
@@ -16,7 +21,6 @@ const Header = () => {
                                 className="me-2"
                                 aria-label="Search"
                             />
-
                         </Form>
                     </Nav>
                     <Nav
@@ -24,24 +28,22 @@ const Header = () => {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link href="/notes">My Notes</Nav.Link>
-                       
+                        <Nav.Link as={Link} to="/mynotes">
+                            <Link to='/mynotes' style={{ textDecoration: "none" }}>
+                                My Notes
+                            </Link>
+                        </Nav.Link>
+
                         <NavDropdown title="Sayan Ghosh" id="navbarScrollingDropdown">
                             <NavDropdown.Item href="/">My Profile</NavDropdown.Item>
-                            
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="/">
-                                Logout
-                            </NavDropdown.Item>
+                            <NavDropdown.Item href="/">Logout</NavDropdown.Item>
                         </NavDropdown>
-                        
                     </Nav>
-
                 </Navbar.Collapse>
             </Container>
         </Navbar>
-    )
-
+    );
 }
 
-export default Header
+export default Header;
