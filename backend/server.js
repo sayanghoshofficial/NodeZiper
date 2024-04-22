@@ -4,6 +4,7 @@ const env = require("dotenv");
 const cors = require("cors");
 const connnectDB = require("./config/DB");
 const userRoutes = require("./routes/userRoutes");
+const { notFound, errorHandler } = require("./middlewere/errorMiddleware");
 
 // Load environment variables from .env file
 env.config();
@@ -29,6 +30,9 @@ app.get("/api/notes", (req, res) => {
 
 app.use("/api/users", userRoutes)
 
+
+app.use(notFound);
+app.use(errorHandler);
 // Listen on the defined port
 app.listen(Port, () => {
     console.log('====================================');
