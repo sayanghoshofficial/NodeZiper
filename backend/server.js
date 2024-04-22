@@ -31,5 +31,9 @@ app.get("/api/notes/:id", (req, res) => {
 
 // Listen on the defined port
 app.listen(Port, () => {
+    console.log('====================================');
+
     console.log(`Server listening on port ${Port}`);
+    console.log('====================================');
+
 });
