@@ -1,10 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import MainScreen from '../../MainScreen';
 import { Link } from 'react-router-dom';
 import { Button, Card, Badge, Accordion } from 'react-bootstrap';
-import { notes } from './mockData';
+// import { notes } from './mockData';
+import axios from "axios";
 
 const MyNotes = () => {
+  const [notes, setNotes]  = useState([])
+
+  const fetchNotes = async()=>{
+    try {
+      const res = await axios.get("http://localhost:5000/api/notes");
+      setNotes(res?.data)
+    } catch (error) {
+      console.error("Error fetching notes:", error);
+    }
+  }
+
+  useEffect(()=>{
+    fetchNotes()
+  },[])
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure?")) {
@@ -19,7 +34,7 @@ const MyNotes = () => {
         </Button>
       </Link>
       {notes.map((note, i) =>
-        <Accordion flush>
+        <Accordion flush key={note?._id}>
           <Accordion.Item eventKey={i}>
             <Card style={{ margin: 10 }}>
               <Card.Header style={{ display: 'flex' }}>
@@ -37,7 +52,7 @@ const MyNotes = () => {
               </Card.Header>
               <Card.Body>
                 <Accordion.Body style={{width:"100%"}}>
-                  <h4><Badge varient="success">Catagory - {note?.category}</Badge></h4>
+                  <h4><Badge varient="success" style={{backgroundColor:"green", color:"white"}}>Catagory - {note?.category}</Badge></h4>
                   <blockquote className="blockquote mb-0">
                     <p>
                       {note?.content}
