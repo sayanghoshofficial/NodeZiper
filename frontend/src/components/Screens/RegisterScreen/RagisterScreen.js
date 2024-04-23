@@ -1,13 +1,14 @@
-import React, { Fragment, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Main, Title } from '../LandingPage/index.sc'
 import { Button, Form, Container, Row, Col } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import e from 'cors';
 import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import Loader from '../../Loader/Loader';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { register } from '../../../Redux/actions/userActions';
 
 const RagisterPage = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,38 +16,23 @@ const RagisterPage = () => {
   const [pic, setPic] = useState("https://github.com/sayanghoshofficial/NodeZiper/assets/99132893/66485cb1-0a16-4dc4-b6cc-f30dc7000e9f");
   const [message, setMessage] = useState(null);
   const [picMessage, setPicMessage] = useState(null);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
+
+  useEffect(() => {
+    userInfo && navigate('/mynotes');
+  }, [userInfo]);
+  
 
   const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setMessage("Password Do Not Match...")
+      setMessage("Password does Not Match!!!")
     } else {
-      setMessage(null);
-      try {
-        const config = {
-          headers: {
-            "Content-type": "application/json"
-          }
-        }
-        setLoading(true);
-        const { data } = await axios.post("http://localhost:5000/api/users", {
-          name,
-          pic,
-          email,
-          password
-        }, config);
-        console.log(data);
-        localStorage.setItem('userInfo', JSON.stringify(data));
-        setLoading(false);
-
-      } catch (error) {
-        setError(error.response.data.message);
-        setLoading(false);
-      }
+      dispatch(register(name, email, password, pic))
     }
-    console.log(email, password, confirmPassword, pic)
+
   }
 
   const postDetails = (pics) => {
@@ -74,7 +60,7 @@ const RagisterPage = () => {
       return setPicMessage("Please Select an Image");
     }
   }
-  
+
   return (
     <Main>
       <Container>
@@ -129,7 +115,7 @@ const RagisterPage = () => {
             {picMessage && <ErrorMessage varient='danger'>{picMessage}</ErrorMessage>}
             <Form.Group controlId="formFileLg" className="mb-3">
               <Form.Label>Upload Profile Picture</Form.Label>
-              <Form.Control type="file" size="lg" onChange={(e)=>postDetails(e.target.files[0])} />
+              <Form.Control type="file" size="lg" onChange={(e) => postDetails(e.target.files[0])} />
             </Form.Group>
 
 
