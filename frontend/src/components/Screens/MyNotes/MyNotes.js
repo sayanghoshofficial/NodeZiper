@@ -7,7 +7,7 @@ import { deleteNotes, listNotes } from '../../../Redux/actions/noteActions';
 import Loader from '../../Loader/Loader';
 import ErrorMessage from "../../ErrorMessage/ErrorMessage"
 
-const MyNotes = () => {
+const MyNotes = ({ search }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const noteList = useSelector(state => state.noteList)
@@ -45,7 +45,9 @@ const MyNotes = () => {
       {loadingDelete && <Loader />}
       {error && <ErrorMessage varient='danger'>{error}</ErrorMessage>}
       {loading && <Loader />}
-      {notes && notes?.reverse().map((note, i) =>
+      {notes && notes?.reverse()
+        .filter((filteredNote) => filteredNote.title.toLowerCase().includes(search.toLowerCase()))
+        .map((note, i) =>
         <Accordion flush key={note?._id}>
           <Accordion.Item eventKey={i}>
             <Card style={{ margin: 10 }}>
