@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import { Container, Row } from 'react-bootstrap'
 import { MainScreenWpr,Page,Heading } from './index.sc';
 

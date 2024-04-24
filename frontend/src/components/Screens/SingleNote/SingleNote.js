@@ -24,7 +24,7 @@ const SingleNote = () => {
   const { loading, error } = noteUpdate;
 
   const noteDelete = useSelector(state => state.noteDelete)
-  const { loading: loadingDelete, error: errorDelete, success: successDelete } = noteDelete;
+  const { loading: loadingDelete, error: errorDelete } = noteDelete;
 
   // console.log(note);
 

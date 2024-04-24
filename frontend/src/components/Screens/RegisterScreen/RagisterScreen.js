@@ -22,8 +22,8 @@ const RagisterPage = () => {
 
   useEffect(() => {
     userInfo && navigate('/mynotes');
-  }, [userInfo]);
-  
+  }, [userInfo, navigate]);
+
 
   const submitHandler = async (e) => {
     e.preventDefault();

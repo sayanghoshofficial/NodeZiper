@@ -1,4 +1,6 @@
-import styled, { css } from "styled-components";
+import styled
+// , { css }
+ from "styled-components";
 
 export const Main = styled.div`
 min-height: 90vh;
@@ -43,22 +45,22 @@ width: 200px;
   }
 `;
 
-// Define media query styles
-const desktopStyles = css`
-  ButtonContainer {
-    padding: 0 200px;
-  }
-  Title {
-    padding: 0 100px;
-  }
-`;
+// // Define media query styles
+// const desktopStyles = css`
+//   ButtonContainer {
+//     padding: 0 200px;
+//   }
+//   Title {
+//     padding: 0 100px;
+//   }
+// `;
 
-const mobileStyles = css`
-  Title {
-    font-size: 60px;
-  }
-  Landingbutton {
-    width: 150px;
-    height: 50px;
-  }
-`;
+// const mobileStyles = css`
+//   Title {
+//     font-size: 60px;
+//   }
+//   Landingbutton {
+//     width: 150px;
+//     height: 50px;
+//   }
+// `;

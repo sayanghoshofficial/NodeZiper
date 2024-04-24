@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { ButtonContainer, IntroText, Landingbutton, Main, SubTitle, Title } from './index.sc'
-import { Button, Col, Container, Row } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
+import { Container, Row } from 'react-bootstrap'
+// import { useNavigate } from 'react-router-dom'
 
 const LandingPage = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     // useEffect(()=>{
     //     const userInfo = localStorage.getItem('userInfo')
     //     if(userInfo){
