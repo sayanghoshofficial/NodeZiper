@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Container, Form, Nav, NavDropdown, Navbar } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -12,7 +12,9 @@ const Header = () => {
     const { userInfo } = userLogin;
 
 
-
+    useEffect(() => {
+        navigate('/')
+    }, [userInfo])
 
     const logoutHandler = () => {
         dispatch(logout());

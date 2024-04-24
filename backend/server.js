@@ -4,6 +4,8 @@ const env = require("dotenv");
 const cors = require("cors");
 const connnectDB = require("./config/DB");
 const userRoutes = require("./routes/userRoutes");
+const noteRoutes = require("./routes/noteRoutes");
+
 const { notFound, errorHandler } = require("./middlewere/errorMiddleware");
 
 // Load environment variables from .env file
@@ -24,11 +26,13 @@ app.get("/", (req, res) => {
     res.send("Api running successfully.....");
 });
 
-app.get("/api/notes", (req, res) => {
-    res.json(notes);
-});
+// app.get("/api/notes", (req, res) => {
+//     res.json(notes);
+// });
 
 app.use("/api/users", userRoutes)
+app.use("/api/note", noteRoutes)
+
 
 
 app.use(notFound);
