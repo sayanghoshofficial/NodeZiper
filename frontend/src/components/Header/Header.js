@@ -51,11 +51,13 @@ const Header = () => {
                             </Link>
                         </Nav.Link>
 
-                        <NavDropdown title="Sayan Ghosh" id="navbarScrollingDropdown">
-                            <NavDropdown.Item href="/">My Profile</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
-                        </NavDropdown>
+                        {userInfo &&
+                            <NavDropdown title={`${userInfo?.name}`} id="navbarScrollingDropdown">
+                                <NavDropdown.Item href="/">My Profile</NavDropdown.Item>
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
+                            </NavDropdown>
+                        }
                     </Nav>
                 </Navbar.Collapse>
             </Container>

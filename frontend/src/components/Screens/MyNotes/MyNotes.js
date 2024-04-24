@@ -1,9 +1,9 @@
-import React, { useEffect} from 'react'
+import React, { useEffect } from 'react'
 import MainScreen from '../../MainScreen';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Card, Badge, Accordion } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { listNotes } from '../../../Redux/actions/noteActions';
+import { deleteNotes, listNotes } from '../../../Redux/actions/noteActions';
 import Loader from '../../Loader/Loader';
 import ErrorMessage from "../../ErrorMessage/ErrorMessage"
 
@@ -14,28 +14,38 @@ const MyNotes = () => {
   const { loading, notes, error } = noteList;
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin;
+  const noteCreate = useSelector((state) => state.noteCreate);
+  const { success: successCreate } = noteCreate;
+  const noteUpdate = useSelector((state) => state.noteUpdate);
+  const { success: successUpdate } = noteUpdate;
+  const noteDelete = useSelector(state => state.noteDelete)
+  const { loading: loadingDelete, error: errorDelete, success: successDelete } = noteDelete;
+
 
   useEffect(() => {
     dispatch(listNotes())
-    if(!userInfo){
+    if (!userInfo) {
       navigate('/')
     }
-  }, [dispatch])
+  }, [dispatch, successCreate, navigate, userInfo, successUpdate, successDelete])
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure?")) {
+      dispatch(deleteNotes(id))
     }
   }
   return (
-    <MainScreen title={"Welcome back Sayan..."}>
-      <Link to="createnote">
+    <MainScreen title={`Welcome back ${userInfo?.name}...`}>
+      <Link to="/createnote">
         <Button style={{ marginLeft: 10, marginBottom: 6 }} size='lg'>
           Create New Notes
         </Button>
       </Link>
+      {errorDelete && <ErrorMessage varient='danger'>{errorDelete}</ErrorMessage>}
+      {loadingDelete && <Loader />}
       {error && <ErrorMessage varient='danger'>{error}</ErrorMessage>}
       {loading && <Loader />}
-      {notes && notes?.map((note, i) =>
+      {notes && notes?.reverse().map((note, i) =>
         <Accordion flush key={note?._id}>
           <Accordion.Item eventKey={i}>
             <Card style={{ margin: 10 }}>
@@ -60,7 +70,7 @@ const MyNotes = () => {
                       {note?.content}
                     </p>
                     <footer className="blockquote-footer">
-                      Someone famous in <cite title="Source Title">Source Title</cite>
+                      - Created on <cite title="Source Title">{note?.createdAt.substring(0, 10)}</cite>
                     </footer>
                   </blockquote>
                 </Accordion.Body>
