@@ -1,5 +1,14 @@
 import axios from "axios";
-import { USER_LOGIN_FAILURE, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS } from "../constants/userConstants"
+import { 
+    USER_LOGIN_FAILURE, 
+    USER_LOGIN_REQUEST, 
+    USER_LOGIN_SUCCESS, 
+    USER_LOGOUT, 
+    USER_REGISTER_FAIL, 
+    USER_REGISTER_REQUEST, 
+    USER_REGISTER_SUCCESS 
+} from "../constants/userConstants"
+import { BASE_URL } from "../../components/utils";
 
 export const login = (email, password) => async (dispatch) => {
     try {
@@ -10,7 +19,7 @@ export const login = (email, password) => async (dispatch) => {
                 "Content-type": "application/json"
             }
         }
-        const { data } = await axios.post("http://localhost:5000/api/users/login", {
+        const { data } = await axios.post(`${BASE_URL}api/users/login`, {
             email,
             password
         }, config);
@@ -39,7 +48,7 @@ export const register = (name,email,password,pic) => async(dispatch)=>{
             "Content-type": "application/json"
           }
         }
-        const { data } = await axios.post("http://localhost:5000/api/users", {
+        const { data } = await axios.post(`${BASE_URL}api/users`, {
           name,
           pic,
           email,

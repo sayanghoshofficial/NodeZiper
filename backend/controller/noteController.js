@@ -4,7 +4,7 @@ const Note = require("../models/noteModel");
 
 const getNotes = asyncHandler(async (req, res) => {
     const note = await Note.find({ user: req.user._id });
-    res.json(note)
+    res.send(note).status(200)
 })
 
 const createNote = asyncHandler(async (req, res) => {

@@ -12,9 +12,9 @@ const Header = () => {
     const { userInfo } = userLogin;
 
 
-    useEffect(() => {
-        navigate('/')
-    }, [userInfo])
+    // useEffect(() => {
+    //     navigate('/')
+    // }, [userInfo])
 
     const logoutHandler = () => {
         dispatch(logout());

@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect} from 'react'
 import MainScreen from '../../MainScreen';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Card, Badge, Accordion } from 'react-bootstrap';
-// import { notes } from './mockData';
-import axios from "axios";
+import { useDispatch, useSelector } from 'react-redux';
+import { listNotes } from '../../../Redux/actions/noteActions';
+import Loader from '../../Loader/Loader';
+import ErrorMessage from "../../ErrorMessage/ErrorMessage"
 
 const MyNotes = () => {
-  const [notes, setNotes]  = useState([])
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const noteList = useSelector(state => state.noteList)
+  const { loading, notes, error } = noteList;
+  const userLogin = useSelector(state => state.userLogin)
+  const { userInfo } = userLogin;
 
-  const fetchNotes = async()=>{
-    try {
-      const res = await axios.get("http://localhost:5000/api/notes");
-      setNotes(res?.data)
-    } catch (error) {
-      console.error("Error fetching notes:", error);
+  useEffect(() => {
+    dispatch(listNotes())
+    if(!userInfo){
+      navigate('/')
     }
-  }
-
-  useEffect(()=>{
-    fetchNotes()
-  },[])
+  }, [dispatch])
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure?")) {
-
     }
   }
   return (
@@ -33,12 +33,14 @@ const MyNotes = () => {
           Create New Notes
         </Button>
       </Link>
-      {notes.map((note, i) =>
+      {error && <ErrorMessage varient='danger'>{error}</ErrorMessage>}
+      {loading && <Loader />}
+      {notes && notes?.map((note, i) =>
         <Accordion flush key={note?._id}>
           <Accordion.Item eventKey={i}>
             <Card style={{ margin: 10 }}>
               <Card.Header style={{ display: 'flex' }}>
-                <Accordion.Header style={{width:"100%"}}>
+                <Accordion.Header style={{ width: "100%" }}>
                   <span style={{ color: 'black', textDecoration: 'none', flex: 1, cursor: 'pointer', alignSelf: 'center', fontSize: 18 }}>
 
                     {note?.title}
@@ -51,8 +53,8 @@ const MyNotes = () => {
                 </Accordion.Header>
               </Card.Header>
               <Card.Body>
-                <Accordion.Body style={{width:"100%"}}>
-                  <h4><Badge varient="success" style={{backgroundColor:"green", color:"white"}}>Catagory - {note?.category}</Badge></h4>
+                <Accordion.Body style={{ width: "100%" }}>
+                  <h4><Badge varient="success" style={{ backgroundColor: "green", color: "white" }}>Catagory - {note?.category}</Badge></h4>
                   <blockquote className="blockquote mb-0">
                     <p>
                       {note?.content}

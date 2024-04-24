@@ -10,4 +10,4 @@ const ErrorMessage = ({ varient = "info", children }) => {
     )
 }
 
-export default ErrorMessage
+export default ErrorMessage;

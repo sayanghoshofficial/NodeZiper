@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
 // });
 
 app.use("/api/users", userRoutes)
-app.use("/api/note", noteRoutes)
+app.use("/api/notes", noteRoutes)
 
 
 
