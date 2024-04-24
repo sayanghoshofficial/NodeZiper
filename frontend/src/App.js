@@ -14,7 +14,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   const [search, setSearch] = useState("");
-  console.log(search)
   return (
     <BrowserRouter>
       <Header setSearch={setSearch} />
