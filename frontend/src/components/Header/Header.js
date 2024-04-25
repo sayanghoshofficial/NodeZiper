@@ -52,12 +52,18 @@ const Header = ({ setSearch }) => {
                             </Link>
                         </Nav.Link>
 
-                        {userInfo &&
+                        {userInfo ?
                             <NavDropdown title={`${userInfo?.name}`} id="navbarScrollingDropdown">
                                 <NavDropdown.Item href="/">My Profile</NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
                             </NavDropdown>
+                            :
+                            <Nav.Link as={Link} to="/login">
+                            <Link to='/mynotes' style={{ textDecoration: "none" }}>
+                                login
+                            </Link>
+                        </Nav.Link>
                         }
                     </Nav>
                 </Navbar.Collapse>
