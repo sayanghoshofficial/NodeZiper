@@ -1,4 +1,4 @@
-import React  from 'react'
+import React, { useEffect } from 'react'
 import { Container, Form, Nav, NavDropdown, Navbar } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -13,8 +13,8 @@ const Header = ({ setSearch }) => {
 
 
     // useEffect(() => {
-    //     navigate('/')
-    // }, [userInfo])
+    //     userInfo && navigate('/mynotes')
+    // }, [userInfo, navigate])
 
     const logoutHandler = () => {
         dispatch(logout());
@@ -54,16 +54,16 @@ const Header = ({ setSearch }) => {
 
                         {userInfo ?
                             <NavDropdown title={`${userInfo?.name}`} id="navbarScrollingDropdown">
-                                <NavDropdown.Item href="/">My Profile</NavDropdown.Item>
+                                <NavDropdown.Item href="/profile">My Profile</NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
                             </NavDropdown>
                             :
                             <Nav.Link as={Link} to="/login">
-                            <Link to='/mynotes' style={{ textDecoration: "none" }}>
-                                login
-                            </Link>
-                        </Nav.Link>
+                                <Link to='/mynotes' style={{ textDecoration: "none" }}>
+                                    login
+                                </Link>
+                            </Nav.Link>
                         }
                     </Nav>
                 </Navbar.Collapse>

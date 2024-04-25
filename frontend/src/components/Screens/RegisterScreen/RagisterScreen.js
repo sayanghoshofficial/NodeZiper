@@ -6,6 +6,7 @@ import ErrorMessage from '../../ErrorMessage/ErrorMessage';
 import Loader from '../../Loader/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../../Redux/actions/userActions';
+import DefaultUserPic from "../../../Assets/user.png"
 
 const RagisterPage = () => {
   const navigate = useNavigate();
@@ -13,9 +14,11 @@ const RagisterPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [pic, setPic] = useState("https://github.com/sayanghoshofficial/NodeZiper/assets/99132893/66485cb1-0a16-4dc4-b6cc-f30dc7000e9f");
+  const [pic, setPic] = useState(DefaultUserPic);
   const [message, setMessage] = useState(null);
   const [picMessage, setPicMessage] = useState(null);
+  const [picLoading, setPicLoading] = useState(false);
+
   const dispatch = useDispatch();
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, error, userInfo } = userRegister;
@@ -41,6 +44,7 @@ const RagisterPage = () => {
     }
     setPicMessage(null);
     if (pics.type === 'image/jpeg' || pics.type === 'image/png') {
+      setPicLoading(true)
       const data = new FormData();
       data.append('file', pics);
       data.append('upload_preset', 'noteZipper');
@@ -50,8 +54,8 @@ const RagisterPage = () => {
         body: data
       }).then((res) => res.json())
         .then((data) => {
-          console.log(data);
           setPic(data.url.toString());
+          setPicLoading(false)
         })
         .catch((err) => {
           console.log(err);
@@ -113,10 +117,14 @@ const RagisterPage = () => {
               />
             </Form.Group>
             {picMessage && <ErrorMessage varient='danger'>{picMessage}</ErrorMessage>}
-            <Form.Group controlId="formFileLg" className="mb-3">
-              <Form.Label>Upload Profile Picture</Form.Label>
-              <Form.Control type="file" size="lg" onChange={(e) => postDetails(e.target.files[0])} />
-            </Form.Group>
+            {picLoading ?
+              <Loader size={50} />
+              :
+              <Form.Group controlId="formFileLg" className="mb-3">
+                <Form.Label>Upload Profile Picture</Form.Label>
+                <Form.Control type="file" size="lg" onChange={(e) => postDetails(e.target.files[0])} />
+              </Form.Group>
+            }
 
 
             <Button variant="primary" type="submit">

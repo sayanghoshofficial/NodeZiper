@@ -8,5 +8,6 @@ import Loader from "./Loader/Loader";
 import ErrorMessage from "./ErrorMessage/ErrorMessage";
 import CreateNote from "./Screens/CreateNote/CreateNote";
 import SingleNote from "./Screens/SingleNote/SingleNote";
+import Profile from "./Screens/Profile/Profile";
 
-export { Header, Footer, LandingPage, MyNotes, LoginScreen, RagisterScreen, Loader, ErrorMessage, CreateNote, SingleNote };
+export { Header, Footer, LandingPage, MyNotes, LoginScreen, RagisterScreen, Loader, ErrorMessage, CreateNote, SingleNote, Profile };
