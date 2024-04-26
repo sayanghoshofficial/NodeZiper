@@ -36,8 +36,7 @@ app.use("/api/notes", noteRoutes)
 
 // --------------------------deployment------------------------------
 const __dirname1 = path.resolve();
-console.log('__dirname1:', __dirname1);
-console.log('NODE_ENV:', process.env.NODE_ENV);
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname1, "/frontend/build")));
 
