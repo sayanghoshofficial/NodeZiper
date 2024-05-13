@@ -1,6 +1,8 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const generateToken = require("../utils/generateTokens");
+const logger = require("./logger")
+
 
 const registerUser = asyncHandler(async (req, res) => {
     const { name, email, password, pic } = req.body;
@@ -8,6 +10,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
     if (userExists) {
         res.status(400);
+        logger.userLogger.log('error',`${req?.body?.email} user already exists`)
         throw new Error("User Already Exists")
     }
 
@@ -27,7 +30,9 @@ const registerUser = asyncHandler(async (req, res) => {
             pic: user.pic,
             token: generateToken(user._id)
         })
+        logger.userLogger.log('info',`${user.email} successfully created new user`)
     } else {
+        logger.userLogger.log('error',`error occur during creating new user`)
         res.status(400);
         throw new Error("Error Occured!")
     }
@@ -47,15 +52,15 @@ const authUser = asyncHandler(async (req, res) => {
             pic: user.pic,
             token: generateToken(user._id)
         })
+        logger.userLogger.log('info',`${user.email} successfully authenticate`)
     } else {
+        logger.userLogger.log('error',`error occur during authenticate`)
         res.status(400);
         throw new Error("Invalid email or Password!")
     }
 })
 
 const updateProfile = asyncHandler(async (req, res) => {
-
-
     const user = await User.findById(req.user._id);
     if (user) {
         user.name = req.body.name || user.name;
@@ -74,7 +79,9 @@ const updateProfile = asyncHandler(async (req, res) => {
             pic:updatedUser.pic,
             token: generateToken(updatedUser._id)
         })
+        logger.userLogger.log('info',`${updatedUser.email} successfully update`)
     } else{
+        logger.userLogger.log('error',`error occur during update user`)
         res.status(404);
         throw new Error("User Not Found!");
     }
